@@ -132,14 +132,18 @@ const BookingConfirmPage = () => {
         console.log(err);
       });
   };
-
+  // round === undefined ? false : round.round !== null
   const showConfirm = (event) => {
     let arr = [];
     const thDate = new Date(event.dates);
     const show = `${thDate.getDate()} ${abbrMonth[thDate.getMonth()]} ${
       thDate.getFullYear() + 543
     }`;
-    arr.push(`${show} ${round !== undefined ? `เวลา ${round.round}` : ""}`);
+    arr.push(
+      `${show} ${
+        round !== undefined ? "" : round.round !== null && `เวลา ${round.round}`
+      }`
+    );
     setusers(event);
     setdates(arr);
     openModal();
@@ -223,7 +227,7 @@ const BookingConfirmPage = () => {
       const THdate = THformatDate(d.dates);
       const USdate = USformatDate(d.dates);
       d.users.map((u) => {
-        if (_isStatus[i] !== "CANCEL") {
+        if (u.status !== "CANCEL") {
           obj = {
             name: `${u.first_name} ${u.middle_name} ${u.last_name}`,
             passport_id: u.passport_id,

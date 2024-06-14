@@ -17,8 +17,13 @@ const TableDetail = ({
   const _isStatus = sortedDates(datesusers).map((s) => {
     let status;
     s.users.map((u) => {
-      status = u.status;
+      if (u.status === "WAITING") {
+        status = u.status;
+      }
     });
+    if (status === undefined) {
+      status = "CANCLE";
+    }
     return status;
   });
 
@@ -31,6 +36,8 @@ const TableDetail = ({
         }
       }
     });
+    if (check === undefined) check = false;
+
     return check;
   });
 
@@ -40,8 +47,7 @@ const TableDetail = ({
         if (item.users.length > 0) {
           let hasNextItem = item.users.length;
           let showline = true;
-          // ***** EXPIRED *****
-          const check = _isStatus[i] !== "WAITING";
+          const check = _isStatus[i] === "WAITING";
           // const check = _isStatus[i] === "CANCEL";
           return (
             <div key={i}>
@@ -69,9 +75,9 @@ const TableDetail = ({
                     <div className="mr-2">
                       <ButtonStyle
                         label={"พิมพ์แบบฟอร์มการนัดหมาย"}
-                        type={check ? "disable-auto" : "secondery-auto"}
+                        type={!check ? "disable-auto" : "secondery-auto"}
                         onClick={() => onPrint(item.dates, item)}
-                        disabled={check}
+                        disabled={!check}
                       />
                     </div>
                     <div className="mr-2">
@@ -79,19 +85,19 @@ const TableDetail = ({
                         label={"เลื่อนนัดหมาย"}
                         onClick={() => onPostpone(item.dates, item)}
                         type={
-                          check || !check_postpone[i] === true
-                            ? "disable-auto"
-                            : "secondery-auto"
+                          !check_postpone[i] === true && !check
+                            ? "secondery-auto"
+                            : "disable-auto"
                         }
-                        disabled={check || !check_postpone[i] === true}
+                        disabled={!check_postpone[i] === true && !check}
                       />
                     </div>
                     <div>
                       <ButtonStyle
                         label={"ยกเลิกนัดหมาย"}
-                        type={check ? "disable-auto" : "seconderyR-l"}
+                        type={!check ? "disable-auto" : "seconderyR-l"}
                         onClick={() => onClick(item)}
-                        disabled={check}
+                        disabled={!check}
                       />
                     </div>
                   </div>

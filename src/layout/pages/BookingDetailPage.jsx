@@ -149,28 +149,31 @@ const BookingDetailPage = () => {
   const after_date = () => {
     if (appmpostpone.length !== 0) {
       let arr = [];
-      let date = "";
-      manageData_postpone().appointments.map((a, i) => {
-        if (a.after_date !== manageData_postpone().before_date) {
-          if (date !== a.after_date) {
-            arr.push(
-              `${THformatDate(a.after_date)} ${
-                check_typenormal ? `เวลา ${round.round}` : ""
-              }`
-            );
-          }
-          date = a.after_date;
-        } else if (round !== undefined) {
-          if (date !== a.after_date) {
-            arr.push(
-              `${THformatDate(a.after_date)} ${
-                check_typenormal ? `เวลา ${round.round}` : ""
-              }`
-            );
-          }
-          date = a.after_date;
+      let dateSet = new Set();
+      const beforeDate = manageData_postpone().before_date;
+      const checkdate = check_typenormal ? false : beforeDate;
+      manageData_postpone().appointments.forEach((a) => {
+        if (a.after_date !== checkdate && !dateSet.has(a.after_date)) {
+          arr.push(
+            `${THformatDate(a.after_date)} ${
+              check_typenormal ? `เวลา ${round.round}` : ""
+            }`
+          );
+          dateSet.add(a.after_date);
+        } else if (
+          round !== undefined &&
+          a.after_date !== checkdate &&
+          !dateSet.has(a.after_date)
+        ) {
+          arr.push(
+            `${THformatDate(a.after_date)} ${
+              check_typenormal ? `เวลา ${round.round}` : ""
+            }`
+          );
+          dateSet.add(a.after_date);
         }
       });
+
       return arr;
     }
   };
@@ -294,7 +297,7 @@ const BookingDetailPage = () => {
                 }`,
               ]
             : dates
-        } 
+        }
         after_date={after_date()}
         onSubmit={onSubmit_postponeNormal}
         branch_name={showbranch.branch_name_th}
