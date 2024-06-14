@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0px;
+  padding: 0px;
+  /* background-color: gray; */
+  /* font-family: LINE Seed Sans TH; */
+}
+
+.table-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #e24c86;
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #f65794;
+}
+
+/* hide arrow */
+.table-container::-webkit-scrollbar-button {
+  display: none;
+}
+
+@font-face {
+  font-family: "LINE Seed Sans Bd";
+  src: url(./assets/fonts/LINESeedSansTH_W_Bd.woff) format("woff"),
+    url(./assets//fonts/LINESeedSansTH_W_Bd.woff2) format("woff2");
+}
+@font-face {
+  font-family: "LINE Seed Sans Rg";
+  src: url(./assets/fonts/LINESeedSansTH_W_Rg.woff) format("woff"),
+    url(./assets//fonts/LINESeedSansTH_W_Rg.woff2) format("woff2");
+}
