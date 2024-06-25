@@ -47,7 +47,7 @@ const ButtonStyle = ({ onClick, label, type, disabled }) => {
         onClick={onClick}
         disabled={disabled}
       >
-        {label}
+        {label}ddd
       </button>
     </div>
   );
